@@ -1,5 +1,7 @@
 #include "Renderer.h"
 #include "Framebuffer.h"
+#include "PostProcess.h"
+#include "Image.h"
 
 #include <iostream>
 #include <SDL.h>
@@ -14,6 +16,10 @@ int main(int, char**)
 
 	std::unique_ptr<Framebuffer> framebuffer = std::make_unique<Framebuffer>(renderer.get(), renderer->width, renderer->height);
 	
+	std::unique_ptr<Image> image = std::make_unique<Image>();
+	image->Load("../Resources/sus.bmp");
+	image->Flip();
+
 	bool quit = false;
 	SDL_Event event;
 	while (!quit)
@@ -27,6 +33,9 @@ int main(int, char**)
 		}
 
 		framebuffer->Clear({0, 0, 0, 0});
+
+		framebuffer->DrawImage(300, 30, image.get());
+
 		//for (int i = 0; i < 100; i++)
 		//{
 		//	framebuffer->DrawPoint(rand() % framebuffer->width, rand() % framebuffer->height, { 0, 255, 0, 0 });
@@ -47,42 +56,64 @@ int main(int, char**)
 
 		//framebuffer->DrawCircle(200, 200, 40, {255, 255, 255, 255});
 
-		//assignment start
-		for (int i = 0; i < 100; i++)
-		{
-			framebuffer->DrawPoint(rand() % framebuffer->width, rand() % framebuffer->height, { 0, 255, 0, 0 });
-		}
-		for (int i = 0; i < 20; i++)
-		{
-			framebuffer->DrawRect(rand() % framebuffer->width, rand() % framebuffer->height, 20, 20, { 0, 0, 255, 0 });
-		}
-		for (int i = 0; i < 20; i++)
-		{
-			framebuffer->DrawLine(framebuffer->width >> 1, framebuffer->height >> 1, rand() % framebuffer->width, rand() % framebuffer->height, { 255, 255, 255, 0 });
-		}
+		//for (int i = 0; i < 100; i++)
+		//{
+		//	framebuffer->DrawPoint(rand() % renderer->width, rand() % renderer->height, { 0, 255, 0, 0 });
+		//}
+		//for (int i = 0; i < 20; i++)
+		//{
+		//	framebuffer->DrawRect(rand() % renderer->width, rand() % renderer->height, 20, 20, { 0, 0, 255, 0 });
+		//}
+		//for (int i = 0; i < 20; i++)
+		//{
+		//	framebuffer->DrawLine(renderer->width >> 1, renderer->height >> 1, rand() % renderer->width, rand() % renderer->height, { 255, 255, 255, 0 });
+		//}
 
+		//for (int i = 0; i < 10; i++)
+		//{
+		//	framebuffer->DrawQuadraticCurve(
+		//		rand() % renderer->width, rand() % renderer->height,
+		//		rand() % renderer->width, rand() % renderer->height,
+		//		rand() % renderer->width, rand() % renderer->height, 30, { 255, 255, 0, 255 });
+		//}
+		//for (int i = 0; i < 10; i++)
+		//{
+		//	framebuffer->DrawCubicCurve(
+		//		rand() % renderer->width, rand() % renderer->height,
+		//		rand() % renderer->width, rand() % renderer->height,
+		//		rand() % renderer->width, rand() % renderer->height,
+		//		rand() % renderer->width, rand() % renderer->height,
+		//		30, { 0, 255, 255, 255 });
+		//}
+		
+		//std::unique_ptr<Image> image1 = std::make_unique<Image>(*image.get());
+		////PostProcess::BoxBlur(image1->colorBuffer);
+		//framebuffer->DrawImage(0, 300, image1.get());
 
+		//std::unique_ptr<Image> image2 = std::make_unique<Image>(*image.get());
+		////PostProcess::GaussianBlur(image2->colorBuffer);
+		//framebuffer->DrawImage(200, 300, image2.get());
 
-		for (int i = 0; i < 10; i++)
-		{
-			framebuffer->DrawQuadraticCurve(
-				rand() % framebuffer->width, rand() % framebuffer->height,
-				rand() % framebuffer->width, rand() % framebuffer->height,
-				rand() % framebuffer->width, rand() % framebuffer->height, 30, { 255, 255, 0, 255 });
-		}
-		for (int i = 0; i < 10; i++)
-		{
-			framebuffer->DrawCubicCurve(
-				rand() % framebuffer->width, rand() % framebuffer->height,
-				rand() % framebuffer->width, rand() % framebuffer->height,
-				rand() % framebuffer->width, rand() % framebuffer->height,
-				rand() % framebuffer->width, rand() % framebuffer->height,
-				30, { 0, 255, 255, 255 });
-		}
-		//assignment end
+		//std::unique_ptr<Image> image3 = std::make_unique<Image>(*image.get());
+		////PostProcess::Sharpen(image3->colorBuffer);
+		//framebuffer->DrawImage(400, 300, image3.get());
+
+		std::unique_ptr<Image> image1 = std::make_unique<Image>(*image.get());
+
+		//PostProcess::Invert(image1->colorBuffer);
+		//PostProcess::Noise(image1->colorBuffer, 100);
+		//PostProcess::Brightness(image1->colorBuffer, 100);
+		//PostProcess::Brightness(image1->colorBuffer, -100);
+		//PostProcess::ColorBalance(image1->colorBuffer, 0, 0, 100);
+		//PostProcess::Threshold(image1->colorBuffer, 200);
+		//PostProcess::BoxBlur(image1->colorBuffer);
+		//PostProcess::GaussianBlur(image1->colorBuffer);
+		PostProcess::Sharpen(image1->colorBuffer);
+
+		framebuffer->DrawImage(0, 300, image1.get());
 
 		framebuffer->Update();
-		
+
 		renderer->CopyBuffer(framebuffer.get());
 		renderer->Present();
 	}

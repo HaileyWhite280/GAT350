@@ -1,5 +1,6 @@
 #pragma once
 #include "Renderer.h"
+#include "ColorBuffer.h"
 #include <vector>
 
 class Framebuffer
@@ -24,13 +25,18 @@ public:
 	void DrawQuadraticCurve(int x1, int y1, int x2, int y2, int x3, int y3 ,int steps, const color_t& color);
 	void DrawCubicCurve(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int steps, const color_t& color);
 
+	void DrawImage(int x1, int y1, class Image* image);
+
 	int Lerp(int a, int b, float t);
 
 public:
 	SDL_Texture* texture{ nullptr };
-	uint8_t* buffer{ nullptr };
 
-	int width = 0;
-	int height = 0;
-	int pitch = 0;
+	ColorBuffer colorBuffer;
+
+	//uint8_t* buffer{ nullptr };
+
+	//int width = 0;
+	//int height = 0;
+	//int pitch = 0;
 };
