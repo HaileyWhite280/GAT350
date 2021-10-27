@@ -17,11 +17,10 @@ glm::vec3 Scene::Trace(const ray_t& r, float tMin, float tMax, raycastHit_t& hit
     {
         glm::vec3 target = hit.point + hit.normal + randomInUnitSphere();
         glm::vec3 direction = glm::normalize(target - hit.point);
-        ray_t newRay{ hit.point, hit.normal };
+        ray_t newRay{ hit.point, direction };
 
         return { Trace(newRay, tMin, tMax, hit) * 0.5f };
     }
-    //Exeption is thrown to vec3 class
 
     glm::vec3 direction = glm::normalize(r.direction);
     float t = (direction.y + 1) * 0.5f;

@@ -10,5 +10,5 @@ public:
 	void Trace(const ColorBuffer& coloeBuffer, Scene* scene);
 
 public:
-	int samples = 10;
+	int samples = 1;
 };
