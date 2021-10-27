@@ -1,6 +1,8 @@
 #pragma once
-#include "Types.h"
+#include "SDL.h"
 #include <memory>
+
+using color_t = SDL_Color;
 
 class Renderer
 {
