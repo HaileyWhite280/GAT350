@@ -7,7 +7,9 @@
 #include <glm/vec4.hpp>
 #include <glm/gtx/color_space.hpp>
 #include <sdl.h>
-#include "ColorBuffer.h"
+#include <memory>
+//#include "Ray.h"
+//#include "Material.h"
 
 using color_t = SDL_Color;
 
@@ -52,4 +54,9 @@ inline glm::vec3 randomInUnitSphere()
     } while (glm::length2(p) >= 1);
 
     return p;
+}
+
+inline glm::vec3 reflect(const glm::vec3& v, const glm::vec3& n) 
+{
+    return v - (2 * dot(v, n) * n);
 }

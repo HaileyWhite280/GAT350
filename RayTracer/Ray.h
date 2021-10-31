@@ -6,6 +6,9 @@ struct raycastHit_t
 	float t{ 0 };
 	glm::vec3 point;
 	glm::vec3 normal;
+
+	//did I do this right?
+	class Material* material;
 };
 
 struct ray_t

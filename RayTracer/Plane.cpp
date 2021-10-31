@@ -2,7 +2,6 @@
 
 bool Plane::Hit(const ray_t& r, float tMin, float tMax, raycastHit_t& hit)
 {
-	//Issues could arise here
 	float denominator = glm::dot(r.direction, normal);
 
 	if (denominator == 0)
@@ -27,6 +26,7 @@ bool Plane::Hit(const ray_t& r, float tMin, float tMax, raycastHit_t& hit)
 		hit.t = t;
 		hit.point = r.pointAt(t);
 		hit.normal = normal;
+		hit.material = material.get();
 
 		return true;
 	}
