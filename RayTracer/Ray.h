@@ -7,7 +7,6 @@ struct raycastHit_t
 	glm::vec3 point;
 	glm::vec3 normal;
 
-	//did I do this right?
 	class Material* material;
 };
 
