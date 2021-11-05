@@ -5,6 +5,7 @@
 #include "Tracer.h"
 #include "Scene.h"
 #include "Plane.h"
+#include "Camera.h"
 
 #include <iostream>
 #include <SDL.h>
@@ -22,6 +23,9 @@ int main(int, char**)
 	
 	// ray tracer
 	std::unique_ptr<Tracer> tracer = std::make_unique<Tracer>();
+
+	//samplers
+	std::shared_ptr<Image> image = std::make_shared<Image>("../Resources/sus.bmp");
 
 	// scene
 	std::unique_ptr<Scene> scene = std::make_unique<Scene>();

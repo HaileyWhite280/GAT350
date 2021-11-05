@@ -6,9 +6,14 @@
 
 using color_t = SDL_Color;
 
-Image::~Image()
-{
+//Image::~Image()
+//{
+//
+//}
 
+Image::Image(const std::string& filename, uint8_t alpha)
+{
+    Load(filename, alpha);
 }
 
 bool Image::Load(const std::string& filename, uint8_t alpha)

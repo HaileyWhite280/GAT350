@@ -79,3 +79,14 @@ inline glm::vec3 cross(const glm::vec3& v1, const glm::vec3& v2)
         v1.x * v2.y - v1.y * v2.x
     };
 }
+
+inline glm::vec3 ColorToVec3(const color_t& color)
+{
+    glm::vec3 out_color;
+
+    out_color.r = color.r / 255.0f;
+    out_color.g = color.g / 255.0f;
+    out_color.b = color.b / 255.0f;
+
+    return out_color;
+}
