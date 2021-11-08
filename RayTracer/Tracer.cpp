@@ -45,6 +45,6 @@ void Tracer::Trace(const ColorBuffer& colorBuffer, Scene* scene, Camera* camera)
 
 			colorBuffer.SetColor(x, y, Vec3ToColor(color));
 		}
-		//std::cout << y << std::endl;
+		std::cout << y << " of 600" << std::endl;
 	}
 }

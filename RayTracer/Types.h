@@ -90,3 +90,24 @@ inline glm::vec3 ColorToVec3(const color_t& color)
 
     return out_color;
 }
+
+inline bool refract(const glm::vec3& v, const glm::vec3& n, float refractionIndex, glm::vec3& refracted)
+{
+    glm::vec3 nv = glm::normalize(v);
+    float dt = dot(nv, n);
+    float discriminant = 1 - (refractionIndex * refractionIndex) * (1 - dt * dt);
+    if (discriminant > 0)
+    {
+        refracted = refractionIndex * (nv - (n * dt)) - (n * std::sqrt(discriminant));
+        return true;
+    }
+
+    return false;
+}
+
+inline float schlick(float cosine, float index)
+{
+    float r0 = (1 - index) / (1 + index);
+    r0 = r0 * r0;
+    return (float)(r0 + (1 - r0) * std::pow((1 - cosine), 5));
+}
